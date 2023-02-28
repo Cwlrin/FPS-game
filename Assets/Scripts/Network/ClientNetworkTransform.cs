@@ -1,7 +1,7 @@
 using Unity.Netcode.Components;
 using UnityEngine;
 
-namespace ClientAuthority
+namespace ClientNetworkTransform
 {
     [DisallowMultipleComponent]
     public class ClientNetworkTransform : NetworkTransform

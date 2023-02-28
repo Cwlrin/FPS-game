@@ -6,6 +6,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Camera cam;
 
+    [SerializeField] private float cameraRotationTotal; // 累计转了多少角度
+    [SerializeField] private float cameraRotationLimits = 85f;
+
+    private Vector3 _thrusterForce = Vector3.zero; // 向上的推力
+
     private Vector3 _velocity = Vector3.zero; // 速度，每秒移动的距离
     private Vector3 _xRotation = Vector3.zero; // 旋转视角
     private Vector3 _yRotation = Vector3.zero; // 旋转角色
@@ -32,14 +37,25 @@ public class PlayerController : MonoBehaviour
         _xRotation = xRotation;
     }
 
+    public void Thrust(Vector3 thrusterForce)
+    {
+        _thrusterForce = thrusterForce;
+    }
+
     private void PerformMovement()
     {
         if (_velocity != Vector3.zero) rb.MovePosition(rb.position + _velocity * Time.fixedDeltaTime);
+        if (_thrusterForce != Vector3.zero) rb.AddForce(_thrusterForce); // 作用 Time.fixedDeltaTime秒：0.02s
     }
 
     private void PerformRotation()
     {
         if (_yRotation != Vector3.zero) rb.transform.Rotate(_yRotation);
-        if (_xRotation != Vector3.zero) cam.transform.Rotate(_xRotation);
+        if (_xRotation != Vector3.zero)
+        {
+            cameraRotationTotal += _xRotation.x;
+            cameraRotationTotal = Mathf.Clamp(cameraRotationTotal, -cameraRotationLimits, cameraRotationLimits);
+            cam.transform.localEulerAngles = new Vector3(cameraRotationTotal, 0, 0);
+        }
     }
 }
