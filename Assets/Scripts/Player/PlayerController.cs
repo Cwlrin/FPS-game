@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         _velocity = velocity;
     }
 
-
     public void Rotate(Vector3 yRotation, Vector3 xRotation)
     {
         _yRotation = yRotation;
