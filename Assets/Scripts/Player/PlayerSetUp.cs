@@ -4,21 +4,23 @@ using UnityEngine;
 public class PlayerSetUp : NetworkBehaviour
 {
     [SerializeField] private Behaviour[] componentsToDisable;
-    [SerializeField] private Camera sceneCamera;
+
+    private Camera _sceneCamera;
 
     // Start is called before the first frame update
     private void Start()
     {
         if (!IsLocalPlayer)
         {
-            foreach (var t in componentsToDisable)
-                t.enabled = false;
+            DisableComponents();
         }
         else
         {
-            sceneCamera = Camera.main;
-            if (sceneCamera != null) sceneCamera.gameObject.SetActive(false);
+            _sceneCamera = Camera.main;
+            if (_sceneCamera != null) _sceneCamera.gameObject.SetActive(false);
         }
+
+        SetPlayerName();
     }
 
     // Update is called once per frame
@@ -28,6 +30,17 @@ public class PlayerSetUp : NetworkBehaviour
 
     private void OnDisable()
     {
-        if (sceneCamera != null) sceneCamera.gameObject.SetActive(true);
+        if (_sceneCamera != null) _sceneCamera.gameObject.SetActive(true);
+    }
+
+    private void SetPlayerName()
+    {
+        transform.name = "Player" + GetComponent<NetworkObject>().NetworkObjectId;
+    }
+
+    private void DisableComponents()
+    {
+        foreach (var t in componentsToDisable)
+            t.enabled = false;
     }
 }

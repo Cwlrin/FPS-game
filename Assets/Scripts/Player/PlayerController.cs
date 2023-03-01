@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             cameraRotationTotal += _xRotation.x;
             cameraRotationTotal = Mathf.Clamp(cameraRotationTotal, -cameraRotationLimits, cameraRotationLimits);
-            cam.transform.localEulerAngles = new Vector3(cameraRotationTotal, 0, 0);
+            cam.transform.localEulerAngles = new Vector3(cameraRotationTotal, 0f, 0f);
         }
     }
 }

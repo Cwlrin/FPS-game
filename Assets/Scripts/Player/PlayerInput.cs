@@ -4,7 +4,7 @@ public class PlayerInput : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float lookSensitivity = 3f;
+    [SerializeField] private float lookSensitivity = 5f;
     [SerializeField] private PlayerController controller;
     [SerializeField] private float thrusterForce = 20f;
 
