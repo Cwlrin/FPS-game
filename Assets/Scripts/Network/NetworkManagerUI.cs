@@ -11,13 +11,28 @@ public class NetworkManagerUI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        hostBtn.onClick.AddListener(() => { NetworkManager.Singleton.StartHost(); });
-        serverBtn.onClick.AddListener(() => { NetworkManager.Singleton.StartServer(); });
-        clientBtn.onClick.AddListener(() => { NetworkManager.Singleton.StartClient(); });
+        hostBtn.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartHost();
+            DestroyAllButtons();
+        });
+        serverBtn.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartServer();
+            DestroyAllButtons();
+        });
+        clientBtn.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartClient();
+            DestroyAllButtons();
+        });
     }
 
     // Update is called once per frame
-    private void Update()
+    private void DestroyAllButtons()
     {
+        Destroy(hostBtn.gameObject);
+        Destroy(serverBtn.gameObject);
+        Destroy(clientBtn.gameObject);
     }
 }
