@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static Dictionary<string, Player> _players = new Dictionary<string, Player>();
+    private static Dictionary<string, Player> _players = new();
 
+    [SerializeField] public MatchingSettings matchingSettings;
     public static GameManager Singleton;
 
     private void Awake()

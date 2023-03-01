@@ -24,8 +24,7 @@ public class PlayerShooting : NetworkBehaviour
 
     private void Shoot()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, weapon.range, mask))
+        if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out var hit, weapon.range, mask))
             if (hit.collider.CompareTag(PlayerTag))
                 ShootServerRpc(hit.collider.name, weapon.damage);
     }

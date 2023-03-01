@@ -305,6 +305,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  componentsToDisable:
+  - {fileID: 1305878465034265818}
+  - {fileID: 1305878465034265819}
+  - {fileID: 5196007123148887853}
 --- !u!1 &1305878465134969935
 GameObject:
   m_ObjectHideFlags: 0
