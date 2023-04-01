@@ -6,9 +6,9 @@ public class Player : NetworkBehaviour
 {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Behaviour[] componentsToDisable;
+    private bool _colliderEnabled;
 
     private bool[] _componentsEnabled;
-    private bool _colliderEnabled;
 
     private NetworkVariable<int> _currentHealth = new();
     private NetworkVariable<bool> _isDead = new();
@@ -48,7 +48,7 @@ public class Player : NetworkBehaviour
             _currentHealth.Value = 0;
             _isDead.Value = true;
 
-            DieOnServer();
+            if (!IsHost) DieOnServer();
             DieClientRpc();
         }
     }
