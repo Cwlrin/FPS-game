@@ -12,13 +12,6 @@ public class PlayerShooting : NetworkBehaviour
 
     private WeaponManager _weaponManager;
 
-
-    enum HitEffectMaterial
-    {
-        Metal,
-        Stone,
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -40,7 +33,7 @@ public class PlayerShooting : NetworkBehaviour
         else // 连发
         {
             if (Input.GetButtonDown("Fire1"))
-                InvokeRepeating("Shoot", 0f, 1f / _currentWeapon.shootRate);
+                InvokeRepeating(nameof(Shoot), 0f, 1f / _currentWeapon.shootRate);
             else if (Input.GetButtonUp("Fire1") || Input.GetKeyDown(KeyCode.Q)) CancelInvoke("Shoot");
         }
     }
@@ -66,16 +59,9 @@ public class PlayerShooting : NetworkBehaviour
     private void OnHit(Vector3 pos, Vector3 normal, HitEffectMaterial material) // 击中点的特效
     {
         GameObject hitEffectPrefab;
-        if (material == HitEffectMaterial.Metal)
-        {
-            hitEffectPrefab = _weaponManager.GetCurrentGraphics().metalHitEffectPrefab;
-        }
-        else
-        {
-            hitEffectPrefab = _weaponManager.GetCurrentGraphics().stoneHitEffectPrefab;
-        }
+        hitEffectPrefab = material == HitEffectMaterial.Metal ? _weaponManager.GetCurrentGraphics().metalHitEffectPrefab : _weaponManager.GetCurrentGraphics().stoneHitEffectPrefab;
 
-        var hitEffectObject = Instantiate(hitEffectPrefab,pos,Quaternion.LookRotation(normal));
+        var hitEffectObject = Instantiate(hitEffectPrefab, pos, Quaternion.LookRotation(normal));
         var particleSystem = hitEffectObject.GetComponent<ParticleSystem>();
         particleSystem.Emit(1);
         particleSystem.Play();
@@ -91,10 +77,7 @@ public class PlayerShooting : NetworkBehaviour
     [ServerRpc]
     private void OnHitServerRpc(Vector3 pos, Vector3 normal, HitEffectMaterial material)
     {
-        if (!IsHost)
-        {
-            OnHit(pos, normal, material);
-        }
+        if (!IsHost) OnHit(pos, normal, material);
         OnHitClientRpc(pos, normal, material);
     }
 
@@ -122,5 +105,12 @@ public class PlayerShooting : NetworkBehaviour
     {
         var player = GameManager.Singleton.GetPlayer(name);
         player.TakeDamage(damage);
+    }
+
+
+    private enum HitEffectMaterial
+    {
+        Metal,
+        Stone
     }
 }

@@ -6,9 +6,9 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] private PlayerWeapon primaryWeapon;
     [SerializeField] private PlayerWeapon secondaryWeapon;
     [SerializeField] private GameObject weaponHolder;
+    private WeaponGraphics _currentGraphics;
 
     private PlayerWeapon _currentWeapon;
-    private WeaponGraphics _currentGraphics;
 
     // Start is called before the first frame update
     private void Start()

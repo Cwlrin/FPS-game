@@ -10,8 +10,8 @@ public class Player : NetworkBehaviour
 
     private bool[] _componentsEnabled;
 
-    private NetworkVariable<int> _currentHealth = new();
-    private NetworkVariable<bool> _isDead = new();
+    private readonly NetworkVariable<int> _currentHealth = new();
+    private readonly NetworkVariable<bool> _isDead = new();
 
     public void Setup()
     {
