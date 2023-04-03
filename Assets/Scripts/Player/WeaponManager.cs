@@ -6,8 +6,9 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] private PlayerWeapon primaryWeapon;
     [SerializeField] private PlayerWeapon secondaryWeapon;
     [SerializeField] private GameObject weaponHolder;
-    private WeaponGraphics _currentGraphics;
+    private AudioSource _currentAudioSource;
 
+    private WeaponGraphics _currentGraphics;
     private PlayerWeapon _currentWeapon;
 
     // Start is called before the first frame update
@@ -35,6 +36,9 @@ public class WeaponManager : NetworkBehaviour
         weaponObject.transform.SetParent(weaponHolder.transform);
 
         _currentGraphics = weaponObject.GetComponent<WeaponGraphics>();
+        _currentAudioSource = weaponObject.GetComponent<AudioSource>();
+
+        if (IsLocalPlayer) _currentAudioSource.spatialBlend = 0f;
     }
 
     private void ToggleWeapon()
@@ -64,5 +68,10 @@ public class WeaponManager : NetworkBehaviour
     public WeaponGraphics GetCurrentGraphics()
     {
         return _currentGraphics;
+    }
+
+    public AudioSource GetCurrentAudioSource()
+    {
+        return _currentAudioSource;
     }
 }

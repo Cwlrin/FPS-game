@@ -41,6 +41,7 @@ public class PlayerShooting : NetworkBehaviour
     private void OnShoot() // 每次射击相关的逻辑，包括特效、声音等
     {
         _weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+        _weaponManager.GetCurrentAudioSource().Play();
     }
 
     [ClientRpc]
