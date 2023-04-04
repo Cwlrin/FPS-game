@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float cameraRotationTotal; // 累计转了多少角度
     [SerializeField] private float cameraRotationLimits = 85f;
+    private float _recoilForce; // 后坐力
 
     private Vector3 _thrusterForce = Vector3.zero; // 向上的推力
 
@@ -42,6 +43,11 @@ public class PlayerController : MonoBehaviour
         _thrusterForce = thrusterForce;
     }
 
+    public void AddRecoilForce(float newRecoilForce)
+    {
+        _recoilForce = newRecoilForce;
+    }
+
     private void PerformMovement()
     {
         if (_velocity != Vector3.zero) rb.MovePosition(rb.position + _velocity * Time.fixedDeltaTime);
@@ -50,12 +56,15 @@ public class PlayerController : MonoBehaviour
 
     private void PerformRotation()
     {
-        if (_yRotation != Vector3.zero) rb.transform.Rotate(_yRotation);
-        if (_xRotation != Vector3.zero)
+        if (_yRotation != Vector3.zero || _recoilForce > 0)
+            rb.transform.Rotate(_yRotation + rb.transform.up * Random.Range(-2f * _recoilForce, 2f * _recoilForce));
+        if (_xRotation != Vector3.zero || _recoilForce > 0)
         {
-            cameraRotationTotal += _xRotation.x;
+            cameraRotationTotal += _xRotation.x - _recoilForce;
             cameraRotationTotal = Mathf.Clamp(cameraRotationTotal, -cameraRotationLimits, cameraRotationLimits);
             cam.transform.localEulerAngles = new Vector3(cameraRotationTotal, 0f, 0f);
         }
+
+        _recoilForce *= 0.5f;
     }
 }
