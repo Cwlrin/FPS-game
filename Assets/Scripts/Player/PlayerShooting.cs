@@ -35,12 +35,7 @@ public class PlayerShooting : NetworkBehaviour
         {
             if (Input.GetButtonDown("Fire1") && _shootCoolDownTime >= _currentWeapon.shootCoolDownTime) // 按下鼠标左键
             {
-                Shoot(); // 射击
-                _shootCoolDownTime = 0f; // 重置冷却时间
-            }
-            else
-            {
-                _autoShootCount = 0; // 重置连发次数
+                _autoShootCount = 0; // 重置连发模式下，已经射击的次数
                 Shoot(); // 射击
                 _shootCoolDownTime = 0f; // 重置冷却时间
             }
@@ -116,11 +111,6 @@ public class PlayerShooting : NetworkBehaviour
                 mask)) // 射线检测
         {
             if (hit.collider.CompareTag(PlayerTag)) // 玩家
-            {
-                ShootServerRpc(hit.collider.name, _currentWeapon.damage); // 服务器端射击
-                OnHitServerRpc(hit.point, hit.normal, HitEffectMaterial.Metal); // 服务器端击中点特效
-            }
-            else if (hit.collider.CompareTag("Metal")) // 金属
             {
                 ShootServerRpc(hit.collider.name, _currentWeapon.damage); // 服务器端射击
                 OnHitServerRpc(hit.point, hit.normal, HitEffectMaterial.Metal); // 服务器端击中点特效
