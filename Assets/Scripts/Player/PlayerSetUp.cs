@@ -14,10 +14,12 @@ public class PlayerSetUp : NetworkBehaviour
 
         if (!IsLocalPlayer) // 如果不是本地玩家
         {
+            SetLayerMaskForAllChildren(transform, LayerMask.NameToLayer("Remote Player")); // 设置所有子物体的层
             DisableComponents(); // 禁用组件
         }
         else
         {
+            SetLayerMaskForAllChildren(transform,LayerMask.NameToLayer("Player"));
             _sceneCamera = Camera.main; // 获取场景相机
             if (_sceneCamera != null) _sceneCamera.gameObject.SetActive(false); // 禁用场景相机
         }
@@ -47,5 +49,11 @@ public class PlayerSetUp : NetworkBehaviour
     {
         foreach (var t in componentsToDisable) // 遍历所有组件
             t.enabled = false; // 禁用组件
+    }
+
+    private void SetLayerMaskForAllChildren(Transform transform, LayerMask layerMask) // 设置所有子物体的层
+    {
+        transform.gameObject.layer = layerMask; // 设置层
+        for (var i = 0; i < transform.childCount; i++) SetLayerMaskForAllChildren(transform.GetChild(i), layerMask);    // 遍历所有子物体
     }
 }

@@ -8,12 +8,12 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private PlayerController controller; // 玩家控制器
     [SerializeField] private float thrusterForce = 20f; // 推力
 
-    private ConfigurableJoint _joint; // 关节
+    private float _distToGround; // 距离地面的距离
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; // 游戏开始时，鼠标消失
-        _joint = GetComponent<ConfigurableJoint>(); // 获取关节
+        _distToGround = GetComponent<Collider>().bounds.extents.y; // 距离地面的距离
     }
 
     // Update is called once per frame
@@ -33,27 +33,13 @@ public class PlayerInput : MonoBehaviour
         var xRotation = new Vector3(-yMouse, 0f, 0f) * lookSensitivity; // 旋转视角
         controller.Rotate(yRotation, xRotation); // 旋转
 
-        var force = Vector3.zero; // 推力
         if (Input.GetButton("Jump")) // 按下空格键
         {
-            force = Vector3.up * thrusterForce; // 向上的推力
-            _joint.yDrive = new JointDrive // 关节的驱动
+            if (Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.1f)) // 距离地面的距离 + 0.1f
             {
-                positionSpring = 0f, // 弹簧
-                positionDamper = 0f, // 阻尼
-                maximumForce = 0f // 最大力
-            };
+                var force = Vector3.up * thrusterForce; // 向上的推力
+                controller.Thrust(force); // 推力
+            }
         }
-        else
-        {
-            _joint.yDrive = new JointDrive // 关节的驱动
-            {
-                positionSpring = 20f,
-                positionDamper = 0f,
-                maximumForce = 40f
-            };
-        }
-
-        controller.Thrust(force); // 推力
     }
 }
