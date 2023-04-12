@@ -15,6 +15,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float cameraRotationLimits = 85f; // 视角转动的限制角度
 
     private Animator _animator; // 动画
+
+    private float _distToGround; // 距离地面的距离
     private Vector3 _lastFramePosition = Vector3.zero; // 上一帧的位置
     private float _recoilForce; // 后坐力
 
@@ -27,6 +29,7 @@ public class PlayerController : NetworkBehaviour
     {
         _lastFramePosition = transform.position; // 记录上一帧的位置
         _animator = GetComponentInChildren<Animator>(); // 动画
+        _distToGround = GetComponent<Collider>().bounds.extents.y; // 距离地面的距离
     }
 
     private void Update()
@@ -37,9 +40,12 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        PerformMovement(); // 移动
-        PerformRotation(); // 旋转
-        PerformAnimation(); // 动画
+        if (IsLocalPlayer)
+        {
+            PerformMovement(); // 移动
+            PerformRotation(); // 旋转
+            PerformAnimation(); // 动画
+        }
     }
 
     public void Move(Vector3 velocity) // 移动
@@ -72,28 +78,40 @@ public class PlayerController : NetworkBehaviour
         var right = Vector3.Dot(deltaPosition, transform.right); // 右移
 
         var direction = 0; // 静止
-        if (forward > Eps) // 前进
+        switch (forward)
         {
-            direction = 1;
-        }
-        else if (forward < -Eps) // 后退
-        {
-            if (right > Eps) // 右后退
+            case > Eps:
+                direction = 1;
+                break;
+            // 后退
+            // 右后退
+            case < -Eps when right > Eps:
                 direction = 4;
-            else if (right < -Eps) // 左后退
+                break;
+            // 左后退
+            case < -Eps when right < -Eps:
                 direction = 6;
-            else // 后退
+                break;
+            // 后退
+            case < -Eps:
                 direction = 5; // 后退
-        }
-        else if (right > Eps) // 右
-        {
-            direction = 3;
-        }
-        else if (right < -Eps) // 左
-        {
-            direction = 7;
+                break;
+            default:
+            {
+                direction = right switch
+                {
+                    > Eps => 3,
+                    // 左
+                    < -Eps => 7,
+                    _ => direction
+                };
+                break;
+            }
         }
 
+        if (!Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.1f)) direction = 8;
+
+        if (GetComponent<Player>().IsDead()) direction = -1;
         _animator.SetInteger(Direction, direction); // 动画
     }
 

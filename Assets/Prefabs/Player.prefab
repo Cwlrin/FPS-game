@@ -207,22 +207,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   primaryWeapon:
-    name: M16A1
+    name: M4
     damage: 3
     range: 100
     shootRate: 10
     shootCoolDownTime: 0.75
     recoilForce: 1
-    graphics: {fileID: 1995450088426830560, guid: 76069d419218803408b5696d55e32491, type: 3}
+    graphics: {fileID: 469764515217968521, guid: c8c0daeba2a367e4995b8a304459ff32, type: 3}
   secondaryWeapon:
-    name: DesertEagle
+    name: benelliM4
     damage: 10
     range: 100
     shootRate: 0
     shootCoolDownTime: 0.75
     recoilForce: 1
-    graphics: {fileID: 6861449591149414758, guid: 0309da72684201241877b77d363011cf, type: 3}
-  weaponHolder: {fileID: 1811934156665284508}
+    graphics: {fileID: 29122275312203689, guid: 78bb3e89f71055e43863986676e31262, type: 3}
+  weaponHolder: {fileID: 1564809438450444499}
 --- !u!136 &7362961338756884120
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -296,12 +296,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305878465480691719}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7445492988975056785}
-  - {fileID: 3462037484171807083}
   m_Father: {fileID: 1305878465034265812}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -336,7 +335,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -382,7 +381,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!1 &1811934156665284508
+--- !u!1 &1564809438450444499
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,7 +389,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3462037484171807083}
+  - component: {fileID: 8733100717247717717}
   m_Layer: 0
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -398,21 +397,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3462037484171807083
+--- !u!4 &8733100717247717717
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1811934156665284508}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.477, y: -0.13, z: 0.549}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_GameObject: {fileID: 1564809438450444499}
+  m_LocalRotation: {x: 0.015039059, y: 0.040407795, z: 0.6995619, w: -0.7132701}
+  m_LocalPosition: {x: -0.14904828, y: 0.039392587, z: 0.061801974}
+  m_LocalScale: {x: 0.78859586, y: 0.78859603, z: 0.7885962}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1305878465480691718}
+  m_Father: {fileID: 3981842531352554213}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.473, y: -2.104, z: 271.194}
 --- !u!1 &2136424915682254395
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,5 +650,10 @@ PrefabInstance:
 --- !u!4 &3981842531352452167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 498876, guid: 3b5ab3dd72d54ff46ab6be8c31770ac8, type: 3}
+  m_PrefabInstance: {fileID: 3981842531352150267}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3981842531352554213 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 403998, guid: 3b5ab3dd72d54ff46ab6be8c31770ac8, type: 3}
   m_PrefabInstance: {fileID: 3981842531352150267}
   m_PrefabAsset: {fileID: 0}

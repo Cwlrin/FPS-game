@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Player : NetworkBehaviour
 {
+    private static readonly int Direction = Animator.StringToHash("direction");
     [SerializeField] private int maxHealth = 100; // 最大血量
     [SerializeField] private Behaviour[] componentsToDisable; // 禁用的组件
 
     private readonly NetworkVariable<int> _currentHealth = new(); // 当前血量
     private readonly NetworkVariable<bool> _isDead = new(); // 是否死亡
+
     private bool _colliderEnabled; // 碰撞器是否启用
 
     private bool[] _componentsEnabled; // 组件是否启用
+
 
     public void Setup() // 设置
     {
@@ -40,6 +44,11 @@ public class Player : NetworkBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        return _isDead.Value;
+    }
+
     public void TakeDamage(int damage) // 受到了伤害，只在服务器端调用
     {
         if (_isDead.Value) return; // 如果已经死亡，直接返回
@@ -59,6 +68,8 @@ public class Player : NetworkBehaviour
     {
         yield return new WaitForSeconds(GameManager.Singleton.matchingSettings.respawnTime); // 等待重生时间
         SetDefaults(); // 设置默认值
+        GetComponentInChildren<Animator>().SetInteger(Direction, 0); // 设置死亡动画
+        GetComponent<Rigidbody>().useGravity = true; // 启用重力
 
         if (IsLocalPlayer) transform.position = new Vector3(0f, 10f, 0f); // 如果是本地玩家，设置位置
     }
@@ -76,6 +87,9 @@ public class Player : NetworkBehaviour
 
     private void Die() // 死亡方法
     {
+        GetComponentInChildren<Animator>().SetInteger(Direction, -1); // 设置死亡动画
+        GetComponent<Rigidbody>().useGravity= false; // 禁用重力
+
         foreach (var t in componentsToDisable) t.enabled = false; // 禁用组件
 
         var col = GetComponent<Collider>(); // 获取碰撞器
