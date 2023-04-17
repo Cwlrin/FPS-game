@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -15,7 +14,6 @@ public class Player : NetworkBehaviour
     private bool _colliderEnabled; // 碰撞器是否启用
 
     private bool[] _componentsEnabled; // 组件是否启用
-
 
     public void Setup() // 设置
     {
@@ -88,7 +86,7 @@ public class Player : NetworkBehaviour
     private void Die() // 死亡方法
     {
         GetComponentInChildren<Animator>().SetInteger(Direction, -1); // 设置死亡动画
-        GetComponent<Rigidbody>().useGravity= false; // 禁用重力
+        GetComponent<Rigidbody>().useGravity = false; // 禁用重力
 
         foreach (var t in componentsToDisable) t.enabled = false; // 禁用组件
 
