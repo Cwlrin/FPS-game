@@ -19,7 +19,8 @@ public class PlayerSetUp : NetworkBehaviour
         }
         else
         {
-            SetLayerMaskForAllChildren(transform,LayerMask.NameToLayer("Player"));
+            PlayerUI.Singleton.SetPlayer(GetComponent<Player>()); // 设置玩家
+            SetLayerMaskForAllChildren(transform,LayerMask.NameToLayer("Player")); // 设置所有子物体的层
             _sceneCamera = Camera.main; // 获取场景相机
             if (_sceneCamera != null) _sceneCamera.gameObject.SetActive(false); // 禁用场景相机
         }

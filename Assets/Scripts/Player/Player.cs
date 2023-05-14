@@ -85,6 +85,9 @@ public class Player : NetworkBehaviour
 
     private void Die() // 死亡方法
     {
+        GetComponent<PlayerShooting>().StopShooting();
+
+
         GetComponentInChildren<Animator>().SetInteger(Direction, -1); // 设置死亡动画
         GetComponent<Rigidbody>().useGravity = false; // 禁用重力
 

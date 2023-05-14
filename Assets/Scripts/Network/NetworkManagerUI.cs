@@ -10,10 +10,6 @@ using UnityEngine.UI;
 
 public class NetworkManagerUI : MonoBehaviour
 {
-    // [SerializeField] private Button hostBtn; // 主机按钮
-    // [SerializeField] private Button serverBtn; // 服务器按钮
-    // [SerializeField] private Button clientBtn; // 客户端按钮
-
     [SerializeField] private Button refreshButton; // 刷新按钮
     [SerializeField] private Button buildButton; // 构建按钮
 
@@ -30,34 +26,16 @@ public class NetworkManagerUI : MonoBehaviour
         SetConfig(); // 设置配置
         InitButtons(); // 初始化按钮
         RefreshRoomList(); // 刷新房间列表
-        // hostBtn.onClick.AddListener(() => // 添加主机按钮点击事件
-        // {
-        //     NetworkManager.Singleton.StartHost(); // 启动主机
-        //     DestroyAllButtons(); // 销毁所有按钮
-        // });
-        // serverBtn.onClick.AddListener(() => // 添加服务器按钮点击事件
-        // {
-        //     NetworkManager.Singleton.StartServer(); // 启动服务器
-        //     DestroyAllButtons(); // 销毁所有按钮
-        // });
-        // clientBtn.onClick.AddListener(() => // 添加客户端按钮点击事件
-        // {
-        //     NetworkManager.Singleton.StartClient(); // 启动客户端
-        //     DestroyAllButtons(); // 销毁所有按钮
-        // });
     }
 
     private void OnApplicationQuit()
     {
-        if (_buildRoomPort != -1)
-        {
-            RemoveRoom();
-        }
+        if (_buildRoomPort != -1) RemoveRoom();
     }
 
     private void RemoveRoom()
     {
-        StartCoroutine(RemoveRoomRequest("http://8.131.53.27:8080/game/remove_room/?port=" + _buildRoomPort.ToString())); // 启动协程
+        StartCoroutine(RemoveRoomRequest("http://8.131.53.27:8080/game/remove_room/?port=" + _buildRoomPort)); // 启动协程
     }
 
     private IEnumerator RemoveRoomRequest(string uri)
@@ -71,7 +49,6 @@ public class NetworkManagerUI : MonoBehaviour
 
             if (resp.error_massage == "success")
             {
-
             }
         }
     }
@@ -163,8 +140,8 @@ public class NetworkManagerUI : MonoBehaviour
                 transport.ConnectPort = transport.ServerListenPort = port; // 设置端口号
             }
 
-        for (var i = 0; i < args.Length; i++)
-            if (args[i] == "-launch-as-server") // 如果是服务器
+        foreach (var i in args)
+            if (i == "-launch-as-server") // 如果是服务器
             {
                 NetworkManager.Singleton.StartServer(); // 启动服务器
                 DestroyAllButtons(); // 销毁所有按钮
@@ -176,9 +153,6 @@ public class NetworkManagerUI : MonoBehaviour
     {
         refreshButton.onClick.RemoveAllListeners(); // 移除所有监听器
         buildButton.onClick.RemoveAllListeners(); // 移除所有监听器
-        // Destroy(hostBtn.gameObject); // 销毁主机按钮
-        // Destroy(serverBtn.gameObject); // 销毁服务器按钮
-        // Destroy(clientBtn.gameObject); // 销毁客户端按钮
         Destroy(refreshButton.gameObject); // 销毁刷新按钮
         Destroy(buildButton.gameObject); // 销毁构建按钮
 

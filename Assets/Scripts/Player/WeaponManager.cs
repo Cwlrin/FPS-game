@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class WeaponManager : NetworkBehaviour
     {
         _currentWeapon = weapon; // 设置当前武器
 
-        if (weaponHolder.transform.childCount > 0) Destroy(weaponHolder.transform.GetChild(0).gameObject);// 销毁当前武器
+        if (weaponHolder.transform.childCount > 0) Destroy(weaponHolder.transform.GetChild(0).gameObject); // 销毁当前武器
 
         var weaponObject = Instantiate(_currentWeapon.graphics, weaponHolder.transform.position,
             weaponHolder.transform.rotation); // 实例化武器
@@ -73,5 +74,23 @@ public class WeaponManager : NetworkBehaviour
     public AudioSource GetCurrentAudioSource() // 获取当前音频源
     {
         return _currentAudioSource; // 返回当前音频源
+    }
+
+    public void Reload(PlayerWeapon playerWeapon) // 重新装弹
+    {
+        if (playerWeapon.isReloading) return; // 如果正在装弹，直接返回
+        playerWeapon.isReloading = true; // 设置正在装弹
+        print("Reloading...");
+
+        StartCoroutine(ReloadCoroutine(playerWeapon));
+    }
+
+    private IEnumerator ReloadCoroutine(PlayerWeapon playerWeapon) // 重新装弹协程
+    {
+        yield return new WaitForSeconds(playerWeapon.reloadTime); // 等待装弹时间
+
+        playerWeapon.bullets=playerWeapon.maxBullets; // 设置子弹数量为最大子弹数量
+        playerWeapon.isReloading = false; // 设置正在装弹
+
     }
 }

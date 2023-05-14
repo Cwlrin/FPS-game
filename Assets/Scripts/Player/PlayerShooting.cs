@@ -31,6 +31,14 @@ public class PlayerShooting : NetworkBehaviour
 
         _currentWeapon = _weaponManager.GetCurrentWeapon(); // 获取当前武器
 
+        if (Input.GetKeyDown(KeyCode.K)) ShootServerRpc(transform.name, 10);
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _weaponManager.Reload(_currentWeapon); // 换弹
+            return;
+        }
+
         if (_currentWeapon.shootRate <= 0) // 单发
         {
             if (Input.GetButtonDown("Fire1") && _shootCoolDownTime >= _currentWeapon.shootCoolDownTime) // 按下鼠标左键
@@ -47,6 +55,11 @@ public class PlayerShooting : NetworkBehaviour
             else if (Input.GetButtonUp("Fire1") || Input.GetKeyDown(KeyCode.Q))
                 CancelInvoke(nameof(Shoot)); // 松开鼠标左键或按下Q键
         }
+    }
+
+    public void StopShooting()
+    {
+        CancelInvoke(nameof(Shoot)); // 松开鼠标左键或按下Q键
     }
 
     private void OnShoot(float recoilForce) // 每次射击相关的逻辑，包括特效、声音等
@@ -98,6 +111,16 @@ public class PlayerShooting : NetworkBehaviour
 
     private void Shoot() // 射击
     {
+        if (_currentWeapon.bullets <= 0 || _currentWeapon.isReloading) // 如果子弹数为0
+            return; // 直接返回
+
+        _currentWeapon.bullets--; // 子弹数减1
+
+        print("Current bullets: " + _currentWeapon.bullets);
+
+        if (_currentWeapon.bullets <= 0) // 如果子弹数为0
+            _weaponManager.Reload(_currentWeapon); // 换弹
+
         _autoShootCount++; // 连发模式下，已经射击的次数
         var recoilForce = _currentWeapon.recoilForce; // 后坐力
 
