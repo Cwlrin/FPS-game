@@ -75,3 +75,11 @@ crashlytics-build.properties
 
 # Jetbrains Rider cache directory
 .idea/
+
+/[Aa]ssets/DigitalKonstrukt/
+/[Aa]ssets/LowPoly Guns/
+/[Aa]ssets/LowPolySoldiers/
+/[Aa]ssets/RPG_FPS_game_assets_industrial/
+/[Aa]ssets/TextMesh Pro/
+/[Aa]ssets/UnityTechnologies/
+/[Aa]ssets/Weapons of Choice FREE - Komposite Sound/
