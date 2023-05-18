@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static readonly Dictionary<string, Player> _players = new(); // 所有玩家的列表
+    private static readonly Dictionary<string, Player> Players = new(); // 所有玩家的列表
     public static GameManager Singleton; // 单例
 
     [SerializeField] public MatchingSettings matchingSettings; // 匹配设置
@@ -32,16 +32,16 @@ public class GameManager : MonoBehaviour
     public void RegisterPlayer(string name, Player player) // 注册玩家
     {
         player.transform.name = name; // 设置玩家的名字
-        _players.Add(name, player); // 添加玩家
+        Players.Add(name, player); // 添加玩家
     }
 
     public void UnRegisterPlayer(string name) // 注销玩家
     {
-        _players.Remove(name); // 移除玩家
+        Players.Remove(name); // 移除玩家
     }
 
     public Player GetPlayer(string name) // 获取玩家
     {
-        return _players[name]; // 返回玩家
+        return Players[name]; // 返回玩家
     }
 }

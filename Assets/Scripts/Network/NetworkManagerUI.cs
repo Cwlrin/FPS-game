@@ -12,9 +12,11 @@ public class NetworkManagerUI : MonoBehaviour
 {
     [SerializeField] private Button refreshButton; // 刷新按钮
     [SerializeField] private Button buildButton; // 构建按钮
+    [SerializeField] private Button quitButton; // 退出按钮
 
     [SerializeField] private GameObject roomButtonPrefab; // 房间按钮预制体
     [SerializeField] private Canvas menuUI; // 菜单UI
+    [SerializeField] private RawImage background; // 背景
 
     private readonly List<Button> _rooms = new(); // 房间列表
 
@@ -74,11 +76,11 @@ public class NetworkManagerUI : MonoBehaviour
 
             _rooms.Clear(); // 清空房间列表
 
-            var k = 0; // 计数器
+            var k = 1; // 计数器
             foreach (var room in resp.rooms) // 遍历房间列表
             {
                 var buttonObj = Instantiate(roomButtonPrefab, menuUI.transform); // 实例化按钮
-                buttonObj.transform.localPosition = new Vector3(40, 130 - k * 190, 0); // 设置位置
+                buttonObj.transform.localPosition = new Vector3(-480, 320 - k * 160, 0); // 设置位置
                 var button = buttonObj.GetComponent<Button>(); // 获取按钮组件
                 button.GetComponentInChildren<TextMeshProUGUI>().text = room.name; // 设置按钮文本
                 button.onClick.AddListener(() => // 添加按钮点击事件
@@ -151,11 +153,12 @@ public class NetworkManagerUI : MonoBehaviour
     // Update is called once per frame
     private void DestroyAllButtons() // 销毁所有按钮
     {
+        Destroy(background.gameObject); // 销毁背景
         refreshButton.onClick.RemoveAllListeners(); // 移除所有监听器
         buildButton.onClick.RemoveAllListeners(); // 移除所有监听器
         Destroy(refreshButton.gameObject); // 销毁刷新按钮
         Destroy(buildButton.gameObject); // 销毁构建按钮
-
+        Destroy(quitButton.gameObject); // 销毁退出按钮
         foreach (var room in _rooms)
         {
             room.onClick.RemoveAllListeners(); // 移除所有监听器

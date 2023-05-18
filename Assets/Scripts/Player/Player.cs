@@ -69,7 +69,11 @@ public class Player : NetworkBehaviour
         GetComponentInChildren<Animator>().SetInteger(Direction, 0); // 设置死亡动画
         GetComponent<Rigidbody>().useGravity = true; // 启用重力
 
-        if (IsLocalPlayer) transform.position = new Vector3(0f, 10f, 0f); // 如果是本地玩家，设置位置
+        var col = GetComponent<Collider>(); // 获取碰撞器
+        col.enabled = true; // 设置碰撞器是否启用
+
+        if (IsLocalPlayer)
+            transform.position = new Vector3(Random.Range(-12f, 32f), 10f, Random.Range(1f, 24f)); // 如果是本地玩家，设置位置
     }
 
     private void DieOnServer() // 服务器端的死亡方法

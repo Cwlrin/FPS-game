@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked; // 游戏开始时，鼠标消失
         _distToGround = GetComponent<Collider>().bounds.extents.y; // 距离地面的距离
+        print(_distToGround);
     }
 
     // Update is called once per frame

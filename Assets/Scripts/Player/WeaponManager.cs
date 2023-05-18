@@ -89,8 +89,7 @@ public class WeaponManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(playerWeapon.reloadTime); // 等待装弹时间
 
-        playerWeapon.bullets=playerWeapon.maxBullets; // 设置子弹数量为最大子弹数量
+        playerWeapon.bullets = playerWeapon.maxBullets; // 设置子弹数量为最大子弹数量
         playerWeapon.isReloading = false; // 设置正在装弹
-
     }
 }
