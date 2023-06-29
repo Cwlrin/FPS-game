@@ -37,7 +37,7 @@ public class NetworkManagerUI : MonoBehaviour
 
     private void RemoveRoom()
     {
-        StartCoroutine(RemoveRoomRequest("http://8.131.53.27:8080/game/remove_room/?port=" + _buildRoomPort)); // 启动协程
+        StartCoroutine(RemoveRoomRequest("http://x.xxx.xx.xx:8080/game/remove_room/?port=" + _buildRoomPort)); // 启动协程
     }
 
     private IEnumerator RemoveRoomRequest(string uri)
@@ -57,7 +57,7 @@ public class NetworkManagerUI : MonoBehaviour
 
     private void RefreshRoomList()
     {
-        StartCoroutine(RefreshRoomListRequest("http://8.131.53.27:8080/game/get_room_list/")); // 启动协程
+        StartCoroutine(RefreshRoomListRequest("http://x.xxx.xx.xx:8080/game/get_room_list/")); // 启动协程
     }
 
     private IEnumerator RefreshRoomListRequest(string uri)
@@ -101,7 +101,7 @@ public class NetworkManagerUI : MonoBehaviour
 
     private void BuildRoomList()
     {
-        StartCoroutine(BuildRoomListRequest("http://8.131.53.27:8080/game/build_room/")); // 启动协程
+        StartCoroutine(BuildRoomListRequest("http://x.xxx.xx.xx:8080/game/build_room/")); // 启动协程
     }
 
     private IEnumerator BuildRoomListRequest(string uri)

@@ -73,7 +73,7 @@ public class Player : NetworkBehaviour
         col.enabled = true; // 设置碰撞器是否启用
 
         if (IsLocalPlayer)
-            transform.position = new Vector3(Random.Range(-12f, 32f), 10f, Random.Range(1f, 24f)); // 如果是本地玩家，设置位置
+            transform.position = new Vector3(Random.Range(-12f, 32f), 10f, Random.Range(-2f, 20f)); // 如果是本地玩家，设置位置
     }
 
     private void DieOnServer() // 服务器端的死亡方法

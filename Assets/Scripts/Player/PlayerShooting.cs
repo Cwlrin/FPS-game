@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerShooting : NetworkBehaviour
 {
@@ -37,6 +38,11 @@ public class PlayerShooting : NetworkBehaviour
         {
             _weaponManager.Reload(_currentWeapon); // 换弹
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit(); // 退出游戏
         }
 
         if (_currentWeapon.shootRate <= 0) // 单发

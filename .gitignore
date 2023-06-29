@@ -76,6 +76,8 @@ crashlytics-build.properties
 # Jetbrains Rider cache directory
 .idea/
 
+Game.zip
+
 /[Aa]ssets/DigitalKonstrukt/
 /[Aa]ssets/LowPoly Guns/
 /[Aa]ssets/LowPolySoldiers/

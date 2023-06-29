@@ -11,38 +11,38 @@ public class Fade : MonoBehaviour
     public void BlackFade()
     {
         Debug.Log("BlackFade");
-        StartCoroutine(BlackFaded());
+        StartCoroutine(BlackFaded()); // 启动协程
     }
 
     private void FadeToBlack()
     {
-        ri.color = Color.Lerp(ri.color, Color.black, Time.deltaTime * fadeSpeed);
+        ri.color = Color.Lerp(ri.color, Color.black, Time.deltaTime * fadeSpeed); // 插值
     }
 
     private void FadeToClear()
     {
-        ri.color = Color.Lerp(ri.color, Color.clear, Time.deltaTime * fadeSpeed);
+        ri.color = Color.Lerp(ri.color, Color.clear, Time.deltaTime * fadeSpeed); // 插值
     }
 
     private IEnumerator BlackFaded()
     {
-        ri.color = Color.clear;
-        ri.enabled = true;
+        ri.color = Color.clear; // 设置透明
+        ri.enabled = true; // 启用
         while (ri.color.a < 0.99f)
         {
-            FadeToBlack();
-            yield return null;
+            FadeToBlack(); // 淡入
+            yield return null; // 等待一帧
         }
 
-        ri.color = Color.black;
-        yield return new WaitForSeconds(waitTime);
+        ri.color = Color.black; // 设置黑色
+        yield return new WaitForSeconds(waitTime); // 等待 waitTime 秒
         while (ri.color.a > 0.01f)
         {
-            FadeToClear();
-            yield return null;
+            FadeToClear(); // 淡出
+            yield return null; // 等待一帧
         }
 
-        ri.color = Color.clear;
-        ri.enabled= false;
+        ri.color = Color.clear; // 设置透明
+        ri.enabled= false; // 禁用
     }
 }
